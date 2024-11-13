@@ -10,3 +10,4 @@ document.getElementById('showLogin').addEventListener('click', function () {
     document.getElementById('loginContainer').classList.remove('hidden');
     document.getElementById('loginContainer').classList.add('fade-in');
 });
+

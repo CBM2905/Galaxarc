@@ -1,4 +1,4 @@
-import {authI ,signInWithEmailAndPassword, getDoc, doc, showModal} from "./firebase.js"
+import {authI ,signInWithEmailAndPassword, getDoc, doc, showModal, datab} from "./firebase.js"
 
 
 
@@ -27,6 +27,8 @@ async function goFirebase(id) {
     if (documentRef.exists()) {
         const data = documentRef.data();
         localStorage.setItem('usuario', data["name"]);
+        localStorage.setItem('correo',data["correo"]);
+        localStorage.setItem("id",id);
         window.location.href = 'pagp.html';
     }
 };

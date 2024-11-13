@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
-
+import { getStorage, ref, uploadBytes} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js'
 const firebaseConfig = {
     apiKey: "AIzaSyDAXm0DD_QQez86NdFYAxFqXRaWAch1X7A",
     authDomain: "galaxarc-1dff1.firebaseapp.com",
@@ -11,6 +11,9 @@ const firebaseConfig = {
     appId: "1:953769382789:web:5986cc9c4553b398b86aec",
     measurementId: "G-4BEHQYHPGS"
 };
+
+
+
 
 
 const init = initializeApp(firebaseConfig);
@@ -28,4 +31,4 @@ function showModal(message) {
 };
 
 
-export {authI, datab, doc, getDoc, setDoc, signInWithEmailAndPassword, createUserWithEmailAndPassword, showModal}
+export {authI, datab, doc, getDoc, setDoc, signInWithEmailAndPassword, createUserWithEmailAndPassword, showModal, ref, uploadBytes}

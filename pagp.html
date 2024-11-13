@@ -18,6 +18,14 @@
             overflow: hidden;
         }
 
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            display: block;
+        }
+
         .carousel-inner {
             display: flex;
             justify-content: center;
@@ -74,7 +82,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Inicio</a>
                     </li>
-                    <li class="nav-item">
+                    <li id="listjuegosnav"class="nav-item">
                         <a class="nav-link" href="#">Juegos</a>
                     </li>
                     <li class="nav-item">
@@ -82,6 +90,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sobre Nosotros</a>
+                    </li>
+                    <li id="cuentanav"class="nav-item">
+                        <a  class="nav-link" href="#">cuenta</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="" id="navLogin">Iniciar Sesión</a>
@@ -96,7 +107,36 @@
         <h1 class="text-center" id="saludo"></h1>
     </div>
 
-    <div class="swiper mySwiper">
+    <div id="cuenta" class="card hidden">
+        <div class="card-body">
+                <div class="col-auto">
+                    <div class="col-lg-4">
+                        <img id="fotoPerfil" class="bd-placeholder-img rounded-circle" src="imagenes/imagenDefectoCuenta.png" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <h2 id="nombreCuenta" class="fw-normal">Heading</h2>
+                        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+                        <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                      </div>
+                </div>
+                <div class="col-auto">
+                  <label for="staticEmail2" class="visually-hidden">Email</label>
+                  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
+                </div>
+                <div class="col-auto">
+                  <label for="inputPassword2" class="visually-hidden">Password</label>
+                  <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+                </div>
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Default file input example</label>
+                    <input id="fotoFile" class="form-control" type="file" id="formFile">
+                  </div>
+                <button id="file" class="button"></button>
+              
+        </div>
+      </div>
+    <div id="carousel" class="swiper mySwiper fade-in">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="https://i.pinimg.com/originals/0e/8e/db/0e8edbcaef3e22718de6334626ed6d25.gif" alt="Juego 1"
@@ -217,6 +257,11 @@
             }
         }
 
+        function loadNombreCuenta(){
+            const nombre = localStorage.getItem("usuario");
+            document.getElementById("nombreCuenta").innerHTML = nombre; 
+        }
+
         function logout() {
             localStorage.removeItem('usuario');
             mostrarSaludo();
@@ -255,6 +300,8 @@
             });
         });
 
+        loadNombreCuenta();
+
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
             grabCursor: true,
@@ -272,6 +319,8 @@
             },
         });
     </script>
+    <script src="javascript/modificarCuenta.js" type="module"></script>
+    <script src="javascript/toggleNav.js" type="module"></script>
 </body>
 
 </html>
