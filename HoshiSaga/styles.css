@@ -1,0 +1,19 @@
+#gameCanvas {
+    border: 2px solid #555;
+    background-color: white;
+    position: relative;
+}
+
+.bola {
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#mensajeFinal {
+    font-size: 24px;
+    color: green;
+    text-align: center;
+    margin-top: 20px;
+}

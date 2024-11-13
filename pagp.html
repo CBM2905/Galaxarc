@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxarc</title>
+    <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/stylesd.css">
+    <style>
+        .carousel {
+            perspective: 1000px;
+            position: relative;
+            height: 400px;
+            /* Altura del carrusel */
+            overflow: hidden;
+        }
+
+        .carousel-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .game-image {
+            width: 200px;
+            /* Ancho de las imágenes */
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            border-radius: 10px;
+            /* Esquinas redondeadas */
+        }
+
+        .carousel-item {
+            opacity: 0.5;
+            /* Opacidad de las imágenes fuera del centro */
+            transition: opacity 0.5s ease;
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+            /* Opacidad total para la imagen activa */
+            transform: scale(1.2);
+            /* Aumentar tamaño de la imagen activa */
+        }
+
+        .carousel-item-next,
+        .carousel-item-prev {
+            transform: scale(0.8);
+            /* Escala para las imágenes en transición */
+        }
+
+        .game-title {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="imagenes/logo.ico" alt="Logo" style="height: 60px;"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Juegos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre Galaxarc</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" id="navLogin">Iniciar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mt-5">
+        <h1 class="text-center" id="saludo"></h1>
+    </div>
+
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://i.pinimg.com/originals/0e/8e/db/0e8edbcaef3e22718de6334626ed6d25.gif" alt="Juego 1"
+                    class="game-image">
+                <div class="game-title">Juego 1</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://33.media.tumblr.com/cbb15b0bbe00ad8c0ed9b66123cebf41/tumblr_nrecy93dpQ1rpb2rfo1_500.gif"
+                    alt="Juego 2" class="game-image">
+                <div class="game-title">Juego 2</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://cdn2.steamgriddb.com/grid/d429df435d77bed784d71ecd135ea52b.png" alt="Juego 3"
+                    class="game-image">
+                <div class="game-title">Hoshi Saga Remake!</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="imagenes/STARS.jpeg" alt="Juego 4" class="game-image">
+                <div class="game-title">STARS</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://i.gifer.com/UcIY.gif" alt="Juego 5" class="game-image">
+                <div class="game-title">Juego 5</div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
+            </div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <footer class="bg-dark text-white pt-4">
+        <div class="container">
+            <div class="row">
+                <!-- About section -->
+                <div class="col-md-4">
+                    <h5>Galaxarc</h5>
+                    <p>Tu tienda de juegos favorita, donde encontrarás los mejores títulos y ofertas del mercado.</p>
+                </div>
+    
+                <!-- Links section -->
+                <div class="col-md-4">
+                    <h5>Enlaces útiles</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Juegos</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Suscripciones</a></li>
+                        <li><a href="#" class="text-white text-decoration-none">Perfil</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Contact section -->
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt"></i> Dirección: Calle Gamer 123</li>
+                        <li><i class="bi bi-telephone"></i> Teléfono: +123 456 789</li>
+                        <li><i class="bi bi-envelope"></i> Email: contacto@galaxarc.com</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <!-- Social media section -->
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <a href="#" class="text-white mx-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white mx-2"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white mx-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white mx-2"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+    
+            <!-- Copyright section -->
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <p class="">&copy; 2024 Galaxarc. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        function mostrarSaludo() {
+            const usuario = localStorage.getItem('usuario');
+            const navLogin = document.getElementById('navLogin');
+            if (usuario) {
+                if (usuario === 'admin') {
+                    document.getElementById('saludo').innerText = '¡Bienvenido, Administrador!';
+                } else {
+                    document.getElementById('saludo').innerText = `¡Bienvenido, ${usuario}!`;
+                }
+                navLogin.innerText = 'Cerrar Sesión';
+                navLogin.href = 'pagp.html';
+                navLogin.onclick = function () {
+                    logout();
+                };
+            } else {
+                document.getElementById('saludo').innerText = '¡Bienvenido a Galaxarc!';
+                navLogin.innerText = 'Iniciar Sesión';
+                navLogin.href = 'login.html';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('usuario');
+            mostrarSaludo();
+        }
+
+        window.onload = function () {
+            mostrarSaludo();
+        };
+
+        document.querySelectorAll('.game-image').forEach((image, index) => {
+            image.addEventListener('click', function () {
+                let gameUrl = '';
+
+                switch (index) {
+                    case 0:
+                        gameUrl = ''; // URL del juego 1
+                        break;
+                    case 1:
+                        gameUrl = ''; // URL del juego 2
+                        break;
+                    case 2:
+                        gameUrl = 'HoshiSaga/hos.html'; // URL del juego 3 (Hoshi Saga Remake)
+                        break;
+                    case 3:
+                        gameUrl = 'STARS/STARS.html'; // URL del juego 4
+                        break;
+                    case 4:
+                        gameUrl = 'Juego5/juego5.html'; // URL del juego 5
+                        break;
+                    default:
+                        gameUrl = '#'; // Página por defecto, si no hay un enlace definido
+                        break;
+                }
+
+                window.location.href = gameUrl;
+            });
+        });
+
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        });
+    </script>
+</body>
+
+</html>

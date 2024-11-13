@@ -1,0 +1,76 @@
+body {
+    background-image: url('../imagenes/fondop.jpeg');
+    background-size: cover;
+}
+/* Estilos del navbar */
+.navbar {
+    background: linear-gradient(90deg, #000000,#191970, #4B0082  );
+    padding: 10px;
+}
+
+
+.navbar a{
+    color: white !important;
+    transition: color 0.3s ease, transform 0.3s ease;
+    /* Transición suave */
+    font-weight: 500;
+}
+
+/* Efecto hover para resaltar enlaces */
+.navbar a:hover{
+    color: #fff7e7 !important;
+    /* Cambia el color al pasar sobre el enlace */
+    transform: scale(1.01);
+    /* Efecto de agrandamiento */
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    /* Sombra para resaltar */
+}
+
+h1,h2,p{
+    color:aliceblue
+}
+
+/* Estilos del footer */
+footer {
+    background: linear-gradient(90deg, #000000,#191970, #4B0082  );
+    padding: 20px;
+    color: white;
+}
+
+/* Enlaces dentro del footer */
+footer a,
+footer p {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    /* Transición suave */
+}
+
+/* Efecto hover para resaltar enlaces en el footer */
+footer a:hover,
+footer p:hover {
+    color: #fff7e7;
+    /* Cambia el color al pasar sobre el enlace */
+    transform: scale(1.1);
+    /* Efecto de agrandamiento */
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.7);
+    /* Sombra para resaltar */
+}
+
+.swiper {
+      width: 100%;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+
+    .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 300px;
+      height: 300px;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+    }

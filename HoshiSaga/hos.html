@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoshi Saga! Remake</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            transition: opacity 0.5s ease;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        /* Animación de título LED */
+        .led-title {
+            font-size: 50px;
+            letter-spacing: 8px;
+            color: #ffffff;
+            text-shadow: 0px 0px 10px #ffffff, 0px 0px 20px #f6f6f6;
+            animation: blink 1s infinite alternate;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Subtítulos */
+        .subtitles h2 {
+            margin: 15px 0;
+            font-size: 24px;
+            color: #ccc;
+        }
+
+        /* Botones transparentes */
+        .transparent-btn {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #f2f2f2;
+            padding: 10px 20px;
+            font-size: 20px;
+            margin: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .transparent-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Estilos de selección de niveles */
+        #levelSelection {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .level-btn {
+            background-color: #444;
+            border: 2px solid #f2f2f2;
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .level-btn:hover {
+            background-color: #666;
+        }
+
+        /* Sección de juego */
+        #game {
+            display: none;
+            text-align: center;
+        }
+
+        /* Sección de mensaje final */
+        #successMessage {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #mensajeFinal {
+            font-size: 24px;
+            color: green;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="led-title">Hoshi Saga! Remake</h1>
+        <div class="subtitles">
+            <h2 class="subtitle-1">This game is to discover a star covered in a stage</h2>
+            <h2 class="subtitle-2">Encuentra todas las estrellas ocultas en cada nivel y completa la saga!</h2>
+        </div>
+        <div class="buttons">
+            <button class="transparent-btn" id="startGame">Empezar juego</button>
+            <button class="transparent-btn" id="resetGame">Reiniciar partida</button>
+        </div>
+        <footer class="footer">Original ©2007 NEKOGAMES Yoshio Ishii</footer>
+    </div>
+
+    <div id="levelScreen" style="display:none;">
+        <h1>Selecciona el Nivel</h1>
+        <div id="levelSelection"></div>
+        <button class="transparent-btn" onclick="loadLevel(1)">Nivel 1</button>
+        <button class="transparent-btn" id="backButton">Regresar</button>
+    </div>
+
+    <div id="game" style="display:none;">
+        <div id="gameContent"></div> <!-- Aquí se cargará el contenido del nivel -->
+    </div>
+
+    <div id="successMessage">
+        <img src="success.gif" alt="Nivel logrado" />
+    </div>
+
+    <script>
+        document.getElementById('startGame').addEventListener('click', function () {
+            fadeOut('.container', function() {
+                document.querySelector('.container').style.display = 'none';
+                document.getElementById('levelScreen').style.display = 'block';
+                createLevelButtons();
+                fadeIn('#levelScreen');
+            });
+        });
+
+        // Crear botones de nivel
+        function createLevelButtons() {
+            const levelSelection = document.getElementById('levelSelection');
+            levelSelection.innerHTML = ''; // Limpiar los niveles anteriores
+            for (let i = 1; i <= 36; i++) {
+                const levelBtn = document.createElement('div');
+                levelBtn.className = 'level-btn';
+                levelBtn.textContent = `Nivel ${i}`;
+                levelBtn.addEventListener('click', () => loadLevel(i));
+                levelSelection.appendChild(levelBtn);
+            }
+        }
+
+        function loadLevel(level) {
+            fadeOut('#levelScreen', function() {
+                document.getElementById('levelScreen').style.display = 'none';
+                document.getElementById('game').style.display = 'block';
+
+                // Cargar contenido del nivel desde el archivo HTML
+                fetch(`lvl${level}.html`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('gameContent').innerHTML = html;
+
+                    // Ejecutar scripts dentro de `lvl1.html`
+                    let scripts = document.getElementById('gameContent').getElementsByTagName('script');
+                    for (let script of scripts) {
+                        eval(script.innerHTML); // Evaluar cada script manualmente
+                    }
+
+                    // Fader in the game content
+                    fadeIn('#game');
+                })
+                .catch(error => {
+                    console.error('Error al cargar el nivel:', error);
+                    document.getElementById('gameContent').innerHTML = '<p>Error al cargar el nivel.</p>';
+                });
+            });
+        }
+
+        function completeLevel() {
+            fadeOut('#game', function() {
+                document.getElementById('game').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+
+                // Muestra el GIF por 3 segundos y regresa a la pantalla de selección de niveles
+                setTimeout(() => {
+                    fadeOut('#successMessage', function() {
+                        document.getElementById('successMessage').style.display = 'none';
+                        fadeIn('#levelScreen');
+                    });
+                }, 3000);
+            });
+
+            // Aquí puedes añadir la lógica para hacer que el punto vuelva a la posición inicial formando la estrella pentagonal
+            // Ejemplo:
+            // animatePointToStarShape();
+        }
+
+        // Botón de regreso
+        document.getElementById('backButton').addEventListener('click', function () {
+            fadeOut('#game', function() {
+                document.getElementById('game').style.display = 'none';
+                fadeIn('#levelScreen');
+            });
+        });
+
+        // Funciones de fade
+        function fadeOut(element, callback) {
+            const el = document.querySelector(element);
+            let opacity = 1;
+            function fade() {
+                if ((opacity -= 0.05) < 0) {
+                    el.style.display = 'none';
+                    if (callback) callback();
+                } else {
+                    el.style.opacity = opacity;
+                    requestAnimationFrame(fade);
+                }
+            }
+            fade();
+        }
+
+        function fadeIn(element) {
+            const el = document.querySelector(element);
+            el.style.display = 'block';
+            let opacity = 0;
+            function fade() {
+                if ((opacity += 0.05) > 1) {
+                    el.style.opacity = 1;
+                } else {
+                    el.style.opacity = opacity;
+                    requestAnimationFrame(fade);
+                }
+            }
+            fade();
+        }
+    </script>
+</body>
+</html>

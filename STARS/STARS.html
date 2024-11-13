@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Stars</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        canvas {
+            display: block;
+        }
+        #start-menu, #game-over-menu {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+        #start-menu h1, #game-over-menu h1 {
+            font-size: 48px;
+        }
+        #start-menu button, #game-over-menu button {
+            font-size: 24px;
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: white;
+            border: none;
+            color: black;
+            border-radius: 5px;
+        }
+        #start-menu button:hover, #game-over-menu button:hover {
+            background-color: gray;
+        }
+
+        /* Estilos para el menú de pausa */
+    #pause-menu {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        color: white;
+        z-index: 10; /* Para asegurarse de que se superponga a otros elementos */
+    }
+    #pause-menu h1 {
+        font-size: 48px;
+    }
+    #pause-menu button {
+        font-size: 24px;
+        margin: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: white;
+        border: none;
+        color: black;
+        border-radius: 5px;
+    }
+    #pause-menu button:hover {
+        background-color: gray;
+    }
+    </style>
+</head>
+<body>
+
+<!-- Menú de Inicio -->
+<div id="start-menu">
+    <h1>STARS</h1>
+    <button id="start-button">JUGAR</button>
+    <button id="exit-button">SALIR</button>
+</div>
+
+<!-- Menú de Game Over -->
+<div id="game-over-menu">
+    <h1>PERDISTE</h1>
+    <button id="home-button">INICIO</button>
+    <button id="exit-button2">SALIR</button>
+</div>
+
+<!-- Menú de Pausa -->
+<div id="pause-menu" style="display: none;">
+    <h1>PAUSADO</h1>
+    <button id="resume-button">REANUDAR</button>
+    <button id="exit-pause-button">SALIR</button>
+</div>
+
+<script type="text/javascript">
+
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300 },
+            debug: false
+        }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+
+var player;
+var stars;
+var bombs;
+var platforms;
+var cursors;
+var score = 0;
+var gameOver = false;
+var scoreText;
+var gameStarted = false;
+var gameOverMenu = document.getElementById('game-over-menu');
+var startMenu = document.getElementById('start-menu');
+var homeButton = document.getElementById('home-button');
+var exitButton = document.getElementById('exit-button');
+var exitButton2 = document.getElementById('exit-button2');
+var startButton = document.getElementById('start-button');
+var game;
+
+function preload() {
+    this.load.image('sky', 'assets/sky.png');
+    this.load.image('ground', 'assets/platform.png');
+    this.load.image('star', 'assets/star.png');
+    this.load.image('bomb', 'assets/bomb.png');
+    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+}
+
+function create() {
+    // Fondo del juego (si quieres mostrarlo en la pantalla de inicio)
+    this.add.image(400, 300, 'sky');
+
+    // Mostrar el menú de inicio antes de que comience el juego
+    showStartMenu();
+
+    // Esperar a que se presione el botón "JUGAR"
+    startButton.addEventListener('click', function() {
+        startMenu.style.display = 'none'; // Ocultar menú de inicio
+        startGame(); // Llamar a la función para iniciar el juego
+    });
+
+    exitButton.addEventListener('click', function() {
+        window.location.href = '../pagp.html'; // Cambia esta URL por la que prefieras
+    });
+    exitButton2.addEventListener('click', function() {
+        window.location.href = '../pagp.html'; // Cambia esta URL por la que prefieras
+    });
+}
+
+function update() {
+    if (!gameStarted || gameOver) {
+        return; // Si el juego no ha comenzado, no ejecutar el update
+    }
+
+    if (cursors.left.isDown) {
+        player.setVelocityX(-160);
+        player.anims.play('left', true);
+    } else if (cursors.right.isDown) {
+        player.setVelocityX(160);
+        player.anims.play('right', true);
+    } else {
+        player.setVelocityX(0);
+        player.anims.play('turn');
+    }
+
+    if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-330);
+    }
+}
+
+function startGame() {
+    // Solo inicializar si el juego no ha comenzado
+    if (!gameStarted) {
+        // Creación de plataformas
+        platforms = game.scene.scenes[0].physics.add.staticGroup();
+        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+        platforms.create(600, 400, 'ground');
+        platforms.create(50, 250, 'ground');
+        platforms.create(750, 220, 'ground');
+
+        // Jugador
+        player = game.scene.scenes[0].physics.add.sprite(100, 450, 'dude');
+        player.setBounce(0.2);
+        player.setCollideWorldBounds(true);
+
+        // Animaciones del jugador
+        game.scene.scenes[0].anims.create({
+            key: 'left',
+            frames: game.scene.scenes[0].anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        game.scene.scenes[0].anims.create({
+            key: 'turn',
+            frames: [ { key: 'dude', frame: 4 } ],
+            frameRate: 20
+        });
+
+        game.scene.scenes[0].anims.create({
+            key: 'right',
+            frames: game.scene.scenes[0].anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        // Entrada de teclado
+        cursors = game.scene.scenes[0].input.keyboard.createCursorKeys();
+
+        // Estrellas
+        stars = game.scene.scenes[0].physics.add.group({
+            key: 'star',
+            repeat: 11,
+            setXY: { x: 12, y: 0, stepX: 70 }
+        });
+
+        stars.children.iterate(function (child) {
+            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        });
+
+        bombs = game.scene.scenes[0].physics.add.group();
+
+        // Texto de puntuación
+        scoreText = game.scene.scenes[0].add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+
+        // Colisiones
+        game.scene.scenes[0].physics.add.collider(player, platforms);
+        game.scene.scenes[0].physics.add.collider(stars, platforms);
+        game.scene.scenes[0].physics.add.collider(bombs, platforms);
+
+        // Recoger estrellas
+        game.scene.scenes[0].physics.add.overlap(player, stars, collectStar, null, this);
+
+        // Colisión con bombas
+        game.scene.scenes[0].physics.add.collider(player, bombs, hitBomb, null, this);
+
+        // Marcar que el juego ha comenzado
+        gameStarted = true;
+    }
+}
+
+function collectStar (player, star) {
+    star.disableBody(true, true);
+    score += 10;
+    scoreText.setText('Score: ' + score);
+
+    if (stars.countActive(true) === 0) {
+        stars.children.iterate(function (child) {
+            child.enableBody(true, child.x, 0, true, true);
+        });
+
+        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+        var bomb = bombs.create(x, 16, 'bomb');
+        bomb.setBounce(1);
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        bomb.allowGravity = false;
+    }
+}
+
+function hitBomb (player, bomb) {
+    game.scene.scenes[0].physics.pause();
+    player.setTint(0xff0000);
+    player.anims.play('turn');
+    gameOver = true;
+    showGameOverMenu();
+}
+
+function showStartMenu() {
+    startMenu.style.display = 'block';
+}
+
+function showGameOverMenu() {
+    gameOverMenu.style.display = 'block';
+}
+
+homeButton.addEventListener('click', function() {
+    gameOverMenu.style.display = 'none';
+    gameOver = false;
+    resetGame(); // Reiniciar el juego
+});
+
+function resetGame() {
+    // Si el juego ya existe, destruirlo
+    if (game) {
+        game.destroy(true); // Destruir el juego actual
+    }
+
+    // Crear un nuevo juego
+    game = new Phaser.Game(config);
+
+    // Reiniciar las variables
+    score = 0; // Reiniciar la puntuación
+    scoreText = null; // Restablecer la variable de texto de puntuación
+    gameStarted = false; // Reiniciar el estado del juego
+
+    // Mostrar el menú de inicio
+    showStartMenu(); // Mostrar el menú de inicio
+}
+
+// Inicializar el juego
+game = new Phaser.Game(config);
+
+</script>
+<script type="text/javascript">
+    // Crear el botón de pausa
+    var pauseButton = document.createElement('button');
+    pauseButton.innerHTML = '⏸️';
+    pauseButton.style.position = 'absolute';
+    pauseButton.style.top = '25px';
+    pauseButton.style.right = '280px';
+    pauseButton.style.fontSize = '32px';
+    pauseButton.style.background = 'none';
+    pauseButton.style.border = 'none';
+    pauseButton.style.color = 'white';
+    pauseButton.style.cursor = 'pointer';
+    document.body.appendChild(pauseButton);
+
+    pauseButton.addEventListener('click', function() {
+        if (!gameOver && gameStarted) {
+            game.scene.scenes[0].physics.pause();
+            showPauseMenu();
+        }
+    });
+
+    function showPauseMenu() {
+        document.getElementById('pause-menu').style.display = 'block';
+    }
+
+    document.getElementById('resume-button').addEventListener('click', function() {
+        game.scene.scenes[0].physics.resume();
+        document.getElementById('pause-menu').style.display = 'none';
+    });
+
+    document.getElementById('exit-pause-button').addEventListener('click', function() {
+        window.location.href = '../pagp.html'; // Cambia esta URL por la que prefieras
+    });
+</script>
+</body>
+</html>

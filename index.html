@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión / Registro - Plataforma de Videojuegos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/stylesiyr.css">
+    <style>
+        .form-container {
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="login-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-sm-8 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="loginContainer" class="form-container">
+                            <h3 class="card-title text-center">Iniciar Sesión</h3>
+                            <form id="loginForm">
+                                <div class="form-group">
+                                    <label for="loginEmail">Correo</label>
+                                    <input type="text" id="loginEmail" class="form-control" placeholder="Ingresa tu Correo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginPassword">Contraseña</label>
+                                    <input type="password" id="loginPassword" class="form-control" placeholder="Ingresa tu contraseña" required>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                                </div>
+                            </form>
+                            <p class="text-center mt-3">¿No tienes cuenta? <a href="#" id="showRegister">Regístrate aquí</a></p>
+                            <p class="text-center mt-3"><a href="pagp.html">Volver al inicio</a></p>
+                        </div>
+
+                        <div id="registerContainer" class="form-container hidden">
+                            <h3 class="card-title text-center">Registro</h3>
+                            <form id="registroForm">
+                                <div class="form-group">
+                                    <label for="registerUsername">Usuario</label>
+                                    <input type="text" id="registerUsername" class="form-control" placeholder="Ingresa tu usuario" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerEmail">Correo</label>
+                                    <input type="text" id="registerEmail" class="form-control" placeholder="Ingresa tu correo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerPassword">Contraseña</label>
+                                    <input type="password" id="registerPassword" class="form-control" placeholder="Ingresa tu contraseña" required minlength="8" pattern=".{8,}" title="La contraseña debe tener al menos 8 caracteres.">
+                                    <small class="form-text text-muted">Tu contraseña debe tener al menos 8 caracteres.</small>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                                </div>
+                            </form>
+                            <p class="text-center">¿Ya tienes cuenta? <a href="#" id="showLogin">Inicia sesión aquí</a></p>
+                            <p class="text-center mt-3"><a href="pagp.html">Volver al inicio</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for notifications -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notificación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Notification message will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="module" src="javascript/logIn.js"></script>
+    <script type="module" src="javascript/signUp.js"></script>
+    <script src="javascript/toggleLoginRegistro.js"></script>
+</body>
+
+</html>
