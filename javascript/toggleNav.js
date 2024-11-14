@@ -19,7 +19,10 @@ document.getElementById('listjuegosnav').addEventListener('click', function () {
 
 
 async function uploadLaFoto(){
-    const url = await uploadFoto();
+    console.log("her ");
+    const blob = await uploadFoto();
+    const imgUrl = URL.createObjectURL(blob);
     document.getElementById("fotoPerfil").src = "";
-    document.getElementById("fotoPerfil").src = url; 
+    document.getElementById("fotoPerfil").src = imgUrl; 
 }
+

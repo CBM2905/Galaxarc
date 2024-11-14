@@ -15,7 +15,8 @@ async function getFile(url) {
     const { data, error } = await supabase
         .storage
         .from('imagenes_de_cuenta')
-        .download(url)
+        .download(url);
+    return data;
 }
 
 async function getUrl(ruta) {
@@ -32,11 +33,18 @@ async function updateFile(id, fotoFile) {
     const { data, error } = await supabase
   .storage
   .from('imagenes_de_cuenta')
-  .update(String(id) + '.png', fotoFile, {
-    upsert: true
-  })
+  .update(String(id) , fotoFile)
   return data;
 }
 
 
-export { uploadFile, getFile, getUrl, updateFile };
+async function deleteFile(ruta) {
+    const { data, error } = await supabase
+  .storage
+  .from('imagenes_de_cuenta')
+  .remove([ruta]);
+  console.log(data);
+}
+
+
+export { uploadFile, getFile, getUrl, updateFile, deleteFile };
