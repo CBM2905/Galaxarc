@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
+import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, updateEmail } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
 import { getStorage, ref, uploadBytes} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js'
 const firebaseConfig = {
     apiKey: "AIzaSyDAXm0DD_QQez86NdFYAxFqXRaWAch1X7A",
@@ -31,4 +31,48 @@ function showModal(message) {
 };
 
 
-export {authI, datab, doc, getDoc, setDoc, signInWithEmailAndPassword, createUserWithEmailAndPassword, showModal, ref, uploadBytes}
+async function updateEmailFirestore(id,correo) {
+    const refDoc = doc(datab, "USUARIOS",id);
+    await updateDoc(refDoc, {
+        "correo": correo
+    });
+}
+
+async function updateName(id,name) {
+    const refDoc = doc(datab, "USUARIOS",id);
+    await updateDoc(refDoc, {
+        "name": name
+    });
+}
+
+async function updateEmailName(id,correo, name) {
+    const refDoc = doc(datab, "USUARIOS",id);
+    await updateDoc(refDoc, {
+        "name": name,
+        "correo": correo
+    });
+}
+
+async function updateEmailAuth(email) {
+    updateEmail(authI.currentUser, String(email)).then(() => {
+        console.log("updated");
+        return 1;
+      }).catch((error) => {
+        console.log(authI.currentUser)
+        console.log(error);
+        alert(error);
+        return 0;
+      });
+}
+
+
+
+async function updatePasswordAuth(password) {
+    updatePassword(authI.currentUser, password).then(() => {
+        return 1;
+      }).catch((error) => {
+        return 0;
+      });
+}
+
+export {authI, datab, doc, getDoc, setDoc, signInWithEmailAndPassword, createUserWithEmailAndPassword, showModal, ref, uploadBytes, updateEmailFirestore, updateEmailName,updateEmailAuth,updateName,updatePasswordAuth}

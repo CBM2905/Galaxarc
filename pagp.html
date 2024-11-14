@@ -59,13 +59,23 @@
             transform: scale(0.8);
             /* Escala para las imágenes en transición */
         }
-
+        .containerModificado {
+    padding: 20px;
+    background-color: #2d2d2d8f;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgb(0, 0, 0);
+    text-align: center;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
         .game-title {
             text-align: center;
             margin-top: 10px;
             font-weight: bold;
             color: aliceblue;
         }
+
+
     </style>
 </head>
 
@@ -107,35 +117,84 @@
         <h1 class="text-center" id="saludo"></h1>
     </div>
 
-    <div id="cuenta" class="card hidden">
-        <div class="card-body">
-                <div class="col-auto">
-                    <div class="col-lg-4">
+
+    <div id="cuenta" class="container containerModificado hidden">
+  
+        <div class="row">
+                
+                    <div class="col-lg-2">
                         <img id="fotoPerfil" class="bd-placeholder-img rounded-circle" src="imagenes/imagenDefectoCuenta.png" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false">
                         <h2 id="nombreCuenta" class="fw-normal">Heading</h2>
                         <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
                         <p><a class="btn btn-secondary" href="#">View details »</a></p>
                       </div>
+                
+                
+                <div class="col">
+                    <div class="row py-5">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="inputPassword2" class="visually-hidden">Usuario</label>
+                                    <input type="email" class="form-control" id="inputUsuario" placeholder="Usuario"> 
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        
+                                        </label>
+                                      </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row py-5">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="inputPassword2" class="visually-hidden">Password</label>
+                                    <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña   ">
+                                </div>
+                                <div class="col-sm-1    ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        
+                                        </label>    
+                                      </div>
+                                </div>
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="">
+                                        <label for="formFile" class="form-label">Default file input example</label>
+                                        <input id="fotoFile" class="form-control" type="file" id="formFile">
+                                      </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
-                <div class="col-auto">
-                  <label for="staticEmail2" class="visually-hidden">Email</label>
-                  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
-                </div>
-                <div class="col-auto">
-                  <label for="inputPassword2" class="visually-hidden">Password</label>
-                  <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
-                </div>
-                <div class="col-auto">
-                  <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
-                </div>
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Default file input example</label>
-                    <input id="fotoFile" class="form-control" type="file" id="formFile">
-                  </div>
-                <button id="file" class="button"></button>
-              
+                
+                
+                
+                
+                </div> 
+        <div class="row">
+            <div class="col">
+                <button id="file" class="btn btn-primary mb-3">Confirm identity</button>
+             </div>
         </div>
-      </div>
+     
+    </div>
     <div id="carousel" class="swiper mySwiper fade-in">
         <div class="swiper-wrapper">
             <div class="swiper-slide">

@@ -1,14 +1,17 @@
-import {  } from "./firebase.js";
+import { updateName, updateEmailFirestore, updateEmailAuth,  } from "./firebase.js";
 import { uploadFile, getFile, getUrl, deleteFile } from "./supabase.js";
 
 
 document.getElementById("file").addEventListener("click",function(){
-    const foto = document.getElementById("fotoFile").files[0];
-    console.log(foto);
-    let id = localStorage.getItem("id");
-    uploadFoto(id, foto);
-    alert(id);
-    console.log("here");
+    const correo = document.getElementById("inputUsuario").value;
+    console.log("corre" + correo);
+    updateEA(String(correo));
+    //const foto = document.getElementById("fotoFile").files[0];
+    //console.log(foto);
+    //let id = localStorage.getItem("id");
+    //uploadFoto(id, foto);
+    //alert(id);
+    //console.log("here");
 })
 
 
@@ -41,7 +44,22 @@ function updateFotoBlob(blob){
 }
 
 
+function updateN(name){
+    const id = localStorage.getItem("id");
+    updateName(id, name);
+};
 
 
+function updateE(correo){
+    const id = localStorage.getItem("id");
+    updateEmail(id, correo);
+}
+
+
+function updateEA(correo){
+    const id = localStorage.getItem("id");
+    console.log(id + ". . ")
+    updateEmailAuth(correo);
+}
 
 
